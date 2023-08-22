@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  calendar:
+    build:
+      context: ./front
+      args:
+        API_URL: ${API_URL}
+    container_name: calendar
+    command: serve -s build -l 32041
+    ports:
+      - "32041:32041"
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: 10m
+    # before run cmd:  docker network create dock-vv-network
+    networks:
+      - v1-network
+
+networks:
+  v1-network:
+    external: true
