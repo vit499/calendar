@@ -5,7 +5,8 @@ services:
     build:
       context: ./front
       args:
-        API_URL: ${API_URL}
+        API_CITY: ${API_CITY}
+        API_KEY: ${API_KEY}
     container_name: calendar
     command: serve -s build -l 32041
     ports:
