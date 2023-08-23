@@ -6,13 +6,12 @@ const Hour = observer(() => {
   const divStyle = {
     // height: "50px",
     fontSize: "12vh",
-    marginTop: "4vh",
+    marginTop: "8vh",
+    // border: "2px solid",
   };
   return (
     <div style={divStyle}>
-      <div>
-        <p>{`${weatherStore.hour}:${weatherStore.minute}`}</p>
-      </div>
+      <div>{`${weatherStore.hour}:${weatherStore.minute}`}</div>
     </div>
   );
 });

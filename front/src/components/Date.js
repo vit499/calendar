@@ -5,15 +5,15 @@ import weatherStore from "../store/WeatherStore";
 const Date = observer(() => {
   const divStyle = {
     // height: "50px",
-    // fontSize: "4rem",
+    // fontSize: "8rem",
     fontSize: "24vh",
+    // border: "2px solid",
+    fontWeight: "400",
     // marginTop: "2vh",
   };
   return (
     <div style={divStyle}>
-      <div>
-        <p>{weatherStore.date}</p>
-      </div>
+      <div>{weatherStore.date}</div>
     </div>
   );
 });

@@ -31,14 +31,13 @@ class WeatherStore {
     this._first_done = false;
     this._sec = 0;
     this._min = 0;
-    this.hour = 0;
-    this.minute = 0;
+    this.hour = "00";
+    this.minute = "00";
     this.month = 1;
     this.date = 1;
     this.day = "-";
     this.temper = "-";
     this.icon = "-";
-    this._date = new Date();
     this._launch = false;
     this._timer = null;
     this._city = ""; // "Kaliningrad";
@@ -56,23 +55,6 @@ class WeatherStore {
     this._sec = 0;
     this._min = 0;
     this._first_done = false;
-  }
-
-  wlock() {
-    if ("wakeLock" in navigator) {
-      //console.log("Screen Wake Lock API supported!");
-      try {
-        this._wakeLock = navigator.wakeLock.request("screen").then(() => {
-          //console.log("Screen Wake Lock ");
-        });
-        // this._wakeLock.addEventListener("release", () => {
-        //   console.log("Screen Wake Lock released:");
-        // });
-        // this._wakeLock.release();
-      } catch (err) {
-        //console.error(`${err.name}, ${err.message}`);
-      }
-    }
   }
 
   getIndIcon(icon) {
@@ -127,12 +109,16 @@ class WeatherStore {
   updTime() {
     runInAction(() => {
       //console.log("upd time");
-      this._date = new Date();
-      this.hour = this._date.getHours();
-      this.minute = this._date.getMinutes();
-      this.month = months[this._date.getMonth()];
-      this.date = this._date.getDate();
-      this.day = dayOfWeek[this._date.getDay()];
+      const dt = new Date();
+      let h = dt.getHours();
+      if (h < 10) h = "0" + h;
+      this.hour = h;
+      let m = dt.getMinutes();
+      if (m < 10) m = "0" + m;
+      this.minute = m;
+      this.month = months[dt.getMonth()];
+      this.date = dt.getDate();
+      this.day = dayOfWeek[dt.getDay()];
     });
   }
   inc() {
@@ -143,7 +129,6 @@ class WeatherStore {
       } else if (this._sec === 4) {
         this._first_done = true;
         this.getWeather();
-        this.wlock();
       }
     }
     if (this._sec > 59) {

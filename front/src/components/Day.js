@@ -7,12 +7,11 @@ const Day = observer(() => {
     // height: "50px",
     fontSize: "5vh",
     marginTop: "10px",
+    // border: "2px solid",
   };
   return (
     <div style={divStyle}>
-      <div>
-        <p>{weatherStore.day}</p>
-      </div>
+      <div>{weatherStore.day}</div>
     </div>
   );
 });

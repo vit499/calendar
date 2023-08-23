@@ -6,6 +6,7 @@ const Temper = observer(() => {
   const divStyle = {
     // height: "50px",
     fontSize: "8vh",
+    // border: "2px solid",
   };
   const imgStyle = {
     width: "15vh",
@@ -17,9 +18,7 @@ const Temper = observer(() => {
         <div className="col">
           <img src={weatherStore.img} style={imgStyle} />
         </div>
-        <div className="col mt-2">
-          <p>{weatherStore.temper}</p>
-        </div>
+        <div className="col mt-2">{weatherStore.temper}</div>
       </div>
     </div>
   );

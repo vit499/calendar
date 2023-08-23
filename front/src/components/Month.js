@@ -6,13 +6,12 @@ const Month = observer(() => {
   const divStyle = {
     // height: "50px",
     fontSize: "5vh",
-    marginTop: "4vh",
+    marginTop: "8vh",
+    // border: "2px solid",
   };
   return (
     <div style={divStyle}>
-      <div>
-        <p>{weatherStore.month}</p>
-      </div>
+      <div>{weatherStore.month}</div>
     </div>
   );
 });
