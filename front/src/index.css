@@ -14,7 +14,8 @@ code {
 
 .container {
   display: flex;
-  min-height: calc(100vh - 40px);
+  /* min-height: calc(100vh - 40px); */
+  min-height: 100vh;
   flex-direction: column;
 }
 
@@ -32,7 +33,7 @@ code {
 
 .footer {
   /* background: magenta; */
-  padding: 10px;
+  /* padding: 10px; */
   /* height: 50px; */
   height: 20vh;
 }

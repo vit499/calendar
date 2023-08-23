@@ -61,11 +61,11 @@ class WeatherStore {
       let strTemp = itemp.toString() + "\u00B0C";
       if (itemp > 0) strTemp = "+" + strTemp;
       let sIcon = w.weather[0].icon;
-      let urlIcon = `${sIcon}.png`; // Constants.getIconUrl(sIcon);
+      let urlIcon = sIcon; // `${sIcon}.png`;
       runInAction(() => {
-        console.log(`strTemp:${strTemp}`);
-        console.log(`sIcon:${sIcon}`);
-        console.log(`urlIcon:${urlIcon}`);
+        // console.log(`strTemp:${strTemp}`);
+        // console.log(`sIcon:${sIcon}`);
+        // console.log(`urlIcon:${urlIcon}`);
         this.temper = strTemp;
         this.icon = urlIcon;
       });
