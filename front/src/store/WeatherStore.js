@@ -27,6 +27,7 @@ const dayOfWeek = [
 
 class WeatherStore {
   constructor() {
+    this._first_done = false;
     this._sec = 0;
     this._min = 0;
     this.hour = 0;
@@ -40,7 +41,7 @@ class WeatherStore {
     this._launch = false;
     this._timer = null;
     this._city = ""; // "Kaliningrad";
-    this._apikey = ""; //"0def5ea4b295f1a9d161837cb76cb667";
+    this._apikey = "";
     makeAutoObservable(this, {});
   }
 
@@ -48,34 +49,32 @@ class WeatherStore {
     this._city = process.env.REACT_APP_CITY;
     this._apikey = process.env.REACT_APP_API_KEY;
     console.log(`city:${this._city}`);
-    console.log(`apikey:${this._apikey}`);
-    runInAction(() => {
-      this._sec = 0;
-      this._date = new Date().toISOString();
-    });
-  }
-
-  getTime() {
-    // runInAction(() => {
-    //   this._date = new Date().toISOString();
-    // });
-    return this._date;
+    // console.log(`apikey:${this._apikey}`);
+    this._sec = 0;
+    this._min = 0;
+    this._first_done = false;
   }
 
   parseWeather(w) {
-    // let itemp = w.main.temp.round();
-    let itemp = Math.round(w.main.temp);
-    let strTemp = itemp.toString() + "\u00B0C";
-    if (itemp > 0) strTemp = "+" + strTemp;
-    let sIcon = w.weather[0].icon;
-    let urlIcon = `${sIcon}.png`; // Constants.getIconUrl(sIcon);
-    runInAction(() => {
-      console.log(`strTemp:${strTemp}`);
-      console.log(`sIcon:${sIcon}`);
-      console.log(`urlIcon:${urlIcon}`);
-      this.temper = strTemp;
-      this.icon = urlIcon;
-    });
+    try {
+      let itemp = Math.round(w.main.temp);
+      let strTemp = itemp.toString() + "\u00B0C";
+      if (itemp > 0) strTemp = "+" + strTemp;
+      let sIcon = w.weather[0].icon;
+      let urlIcon = `${sIcon}.png`; // Constants.getIconUrl(sIcon);
+      runInAction(() => {
+        console.log(`strTemp:${strTemp}`);
+        console.log(`sIcon:${sIcon}`);
+        console.log(`urlIcon:${urlIcon}`);
+        this.temper = strTemp;
+        this.icon = urlIcon;
+      });
+    } catch (err) {
+      runInAction(() => {
+        this.temper = "-";
+        this.icon = "-";
+      });
+    }
   }
   getWeather() {
     if (!this._city || this._city === "") return;
@@ -84,7 +83,7 @@ class WeatherStore {
       .get(url)
       .then((resp) => {
         const arr = resp.data;
-        console.log(JSON.stringify(arr, null, 2));
+        //console.log(JSON.stringify(arr, null, 2));
         this.parseWeather(arr);
       })
       .catch((err) => {
@@ -108,21 +107,22 @@ class WeatherStore {
   }
   inc() {
     this._sec += 1;
-    // if (this._sec == 10) {
-    //   this.updTime();
-    // }
-    // if (this._sec == 15) {
-    //   this.getWeather();
-    // }
+    if (!this._first_done) {
+      if (this._sec === 2) {
+        this.updTime();
+      } else if (this._sec === 4) {
+        this._first_done = true;
+        this.getWeather();
+      }
+    }
     if (this._sec > 59) {
       this._sec = 0;
       this._min += 1;
       if (this._min > 14) {
         this._min = 0;
         this.getWeather();
-      } else {
-        this.updTime();
       }
+      this.updTime();
     }
   }
 
