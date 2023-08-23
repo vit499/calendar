@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
+import imgs from "../images";
 
 const months = [
   "ЯНВАРЬ",
@@ -42,6 +43,8 @@ class WeatherStore {
     this._timer = null;
     this._city = ""; // "Kaliningrad";
     this._apikey = "";
+    this._wakeLock = null;
+    this.img = imgs[imgs.length - 2].i;
     makeAutoObservable(this, {});
   }
 
@@ -55,19 +58,46 @@ class WeatherStore {
     this._first_done = false;
   }
 
+  wlock() {
+    if ("wakeLock" in navigator) {
+      //console.log("Screen Wake Lock API supported!");
+      try {
+        this._wakeLock = navigator.wakeLock.request("screen").then(() => {
+          //console.log("Screen Wake Lock ");
+        });
+        // this._wakeLock.addEventListener("release", () => {
+        //   console.log("Screen Wake Lock released:");
+        // });
+        // this._wakeLock.release();
+      } catch (err) {
+        //console.error(`${err.name}, ${err.message}`);
+      }
+    }
+  }
+
+  getIndIcon(icon) {
+    for (let i = 0; i < imgs.length; i++) {
+      if (imgs[i].d === icon) {
+        return i;
+      }
+    }
+    return imgs.length - 1;
+  }
+
   parseWeather(w) {
     try {
       let itemp = Math.round(w.main.temp);
       let strTemp = itemp.toString() + "\u00B0C";
       if (itemp > 0) strTemp = "+" + strTemp;
       let sIcon = w.weather[0].icon;
-      let urlIcon = sIcon; // `${sIcon}.png`;
+      const ind = this.getIndIcon(sIcon);
       runInAction(() => {
         // console.log(`strTemp:${strTemp}`);
         // console.log(`sIcon:${sIcon}`);
         // console.log(`urlIcon:${urlIcon}`);
         this.temper = strTemp;
-        this.icon = urlIcon;
+        // this.icon = urlIcon;
+        this.img = imgs[ind].i;
       });
     } catch (err) {
       runInAction(() => {
@@ -113,6 +143,7 @@ class WeatherStore {
       } else if (this._sec === 4) {
         this._first_done = true;
         this.getWeather();
+        this.wlock();
       }
     }
     if (this._sec > 59) {

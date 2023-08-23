@@ -11,7 +11,7 @@ const Temper = observer(() => {
     <div style={divStyle}>
       <div className="row">
         <div className="col">
-          <p>{weatherStore.icon}</p>
+          <img src={weatherStore.img} />
         </div>
         <div className="col">
           <p>{weatherStore.temper}</p>
