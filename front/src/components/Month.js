@@ -5,7 +5,7 @@ import weatherStore from "../store/WeatherStore";
 const Month = observer(() => {
   const divStyle = {
     // height: "50px",
-    fontSize: "5vh",
+    fontSize: "6vh",
     marginTop: "8vh",
     // border: "2px solid",
   };

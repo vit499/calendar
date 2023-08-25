@@ -7,6 +7,7 @@ import Month from "./components/Month";
 import Temper from "./components/Temper";
 import weatherStore from "./store/WeatherStore";
 import "./bootstrap.css";
+import DateMonth from "./components/DateMonth";
 
 function App() {
   useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
   const a = {
     backgroundColor: "#2F4F4F",
     color: "#eeeeee",
+    // fontFamily: "sans-serif",
     // height: "100vh",
     // fontSize: "1.25rem",
   };
@@ -31,10 +33,15 @@ function App() {
           <div> </div>
         </div>
         <div className="main">
-          <div>
+          {/* <div>
             <Month />
             <Date />
             <Day />
+          </div> */}
+          <div>
+            <DateMonth />
+          </div>
+          <div>
             <Hour />
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 import imgs from "../images";
+import colorStore from "./ColorStore";
 
 const months = [
   "ЯНВАРЬ",
@@ -17,13 +18,13 @@ const months = [
   "ДЕКАБРЬ",
 ];
 const dayOfWeek = [
+  "ВОСКРЕСЕНЬЕ",
   "ПОНЕДЕЛЬНИК",
   "ВТОРНИК",
   "СРЕДА",
   "ЧЕТВЕРГ",
   "ПЯТНИЦА",
   "СУББОТА",
-  "ВОСКРЕСЕНЬЕ",
 ];
 
 class WeatherStore {
@@ -42,7 +43,6 @@ class WeatherStore {
     this._timer = null;
     this._city = ""; // "Kaliningrad";
     this._apikey = "";
-    this._wakeLock = null;
     this.img = imgs[imgs.length - 2].i;
     makeAutoObservable(this, {});
   }
@@ -127,9 +127,14 @@ class WeatherStore {
       if (this._sec === 2) {
         this.updTime();
       } else if (this._sec === 4) {
-        this._first_done = true;
         this.getWeather();
+      } else if (this._sec === 6) {
+        this._first_done = true;
+        colorStore.setStyle();
       }
+    }
+    if (this._sec == 15) {
+      if (this.minute == "00") colorStore.setStyle();
     }
     if (this._sec > 59) {
       this._sec = 0;

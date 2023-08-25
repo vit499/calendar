@@ -8,10 +8,12 @@ const Date = observer(() => {
     // fontSize: "8rem",
     fontSize: "24vh",
     // border: "2px solid",
-    fontWeight: "400",
+    fontWeight: "500",
+    // fontWeight: "bold",
     // marginTop: "2vh",
   };
   return (
+    // <div style={divStyle}>
     <div style={divStyle}>
       <div>{weatherStore.date}</div>
     </div>
