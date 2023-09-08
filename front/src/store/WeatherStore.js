@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 import imgs from "../images";
 import colorStore from "./ColorStore";
+import audioStore from "./AudioStore";
 
 const months = [
   "ЯНВАРЬ",
@@ -55,6 +56,7 @@ class WeatherStore {
     this._sec = 0;
     this._min = 0;
     this._first_done = false;
+    audioStore.speakAudio();
   }
 
   getIndIcon(icon) {
