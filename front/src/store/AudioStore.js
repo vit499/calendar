@@ -17,7 +17,7 @@ class AudioStore {
     console.log("speakAudio");
     this.audio = new Audio(m0);
     //this.audio.volume = 0;
-    this.audio.muted = true;
+    // this.audio.muted = true;
     this.audio.loop = true;
     let promise = this.audio.play();
     if (promise !== undefined) {
