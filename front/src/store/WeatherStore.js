@@ -56,7 +56,7 @@ class WeatherStore {
     this._sec = 0;
     this._min = 0;
     this._first_done = false;
-    audioStore.speakAudio();
+    //audioStore.speakAudio();
   }
 
   getIndIcon(icon) {
@@ -91,6 +91,7 @@ class WeatherStore {
     }
   }
   getWeather() {
+    audioStore.speakAudio();
     if (!this._city || this._city === "") return;
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${this._city}&units=metric&APPID=${this._apikey}`;
     axios
@@ -121,6 +122,7 @@ class WeatherStore {
       this.month = months[dt.getMonth()];
       this.date = dt.getDate();
       this.day = dayOfWeek[dt.getDay()];
+      audioStore.speakAudio();
     });
   }
   inc() {
