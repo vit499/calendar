@@ -8,6 +8,7 @@ import Temper from "./components/Temper";
 import weatherStore from "./store/WeatherStore";
 import "./bootstrap.css";
 import DateMonth from "./components/DateMonth";
+import Video from "./components/Video";
 
 function App() {
   useEffect(() => {
@@ -49,6 +50,9 @@ function App() {
           <div>
             <Temper />
           </div>
+        </div>
+        <div>
+          <Video />
         </div>
       </div>
     </div>
